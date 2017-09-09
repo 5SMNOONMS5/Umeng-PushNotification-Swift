@@ -11,7 +11,9 @@
 		7FBCAEC11F62D126005F82BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBCAEC01F62D126005F82BF /* ViewController.swift */; };
 		7FBCAEC41F62D126005F82BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCAEC21F62D126005F82BF /* Main.storyboard */; };
 		7FBCAEC61F62D126005F82BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCAEC51F62D126005F82BF /* Assets.xcassets */; };
-		7FBCAEC91F62D126005F82BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCAEC71F62D126005F82BF /* LaunchScreen.storyboard */; };
+		7FBCAEDF1F6436B7005F82BF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FBCAEDE1F6436B7005F82BF /* Default-568h@2x.png */; };
+		7FBCAEE51F6438FA005F82BF /* libUMessage_Sdk_1.5.0a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBCAEE41F6438FA005F82BF /* libUMessage_Sdk_1.5.0a.a */; };
+		7FBCAEE91F64394C005F82BF /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FBCAEE81F64394C005F82BF /* UserNotifications.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,8 +22,13 @@
 		7FBCAEC01F62D126005F82BF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7FBCAEC31F62D126005F82BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7FBCAEC51F62D126005F82BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		7FBCAEC81F62D126005F82BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7FBCAECA1F62D126005F82BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7FBCAEDE1F6436B7005F82BF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		7FBCAEE01F6438ED005F82BF /* CLSUmengPushNotification-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CLSUmengPushNotification-Bridging-Header.h"; sourceTree = "<group>"; };
+		7FBCAEE31F6438FA005F82BF /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		7FBCAEE41F6438FA005F82BF /* libUMessage_Sdk_1.5.0a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.5.0a.a; sourceTree = "<group>"; };
+		7FBCAEE81F64394C005F82BF /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		7FBCAEEA1F64434A005F82BF /* CLSUmengPushNotification.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CLSUmengPushNotification.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +36,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FBCAEE91F64394C005F82BF /* UserNotifications.framework in Frameworks */,
+				7FBCAEE51F6438FA005F82BF /* libUMessage_Sdk_1.5.0a.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +49,7 @@
 			children = (
 				7FBCAEBD1F62D126005F82BF /* CLSUmengPushNotification */,
 				7FBCAEBC1F62D126005F82BF /* Products */,
+				7FBCAEE71F64394C005F82BF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +64,42 @@
 		7FBCAEBD1F62D126005F82BF /* CLSUmengPushNotification */ = {
 			isa = PBXGroup;
 			children = (
+				7FBCAEEA1F64434A005F82BF /* CLSUmengPushNotification.entitlements */,
 				7FBCAEBE1F62D126005F82BF /* AppDelegate.swift */,
 				7FBCAEC01F62D126005F82BF /* ViewController.swift */,
 				7FBCAEC21F62D126005F82BF /* Main.storyboard */,
-				7FBCAEC51F62D126005F82BF /* Assets.xcassets */,
-				7FBCAEC71F62D126005F82BF /* LaunchScreen.storyboard */,
-				7FBCAECA1F62D126005F82BF /* Info.plist */,
+				7FBCAEE61F643926005F82BF /* Frameworks */,
+				7FBCAEDB1F64365C005F82BF /* Resources */,
 			);
 			path = CLSUmengPushNotification;
+			sourceTree = "<group>";
+		};
+		7FBCAEDB1F64365C005F82BF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7FBCAEDE1F6436B7005F82BF /* Default-568h@2x.png */,
+				7FBCAEE31F6438FA005F82BF /* UMessage.h */,
+				7FBCAEE01F6438ED005F82BF /* CLSUmengPushNotification-Bridging-Header.h */,
+				7FBCAEC51F62D126005F82BF /* Assets.xcassets */,
+				7FBCAECA1F62D126005F82BF /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7FBCAEE61F643926005F82BF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7FBCAEE41F6438FA005F82BF /* libUMessage_Sdk_1.5.0a.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7FBCAEE71F64394C005F82BF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7FBCAEE81F64394C005F82BF /* UserNotifications.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,9 +134,16 @@
 				TargetAttributes = {
 					7FBCAEBA1F62D126005F82BF = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = QWDM3S8674;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -125,9 +170,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FBCAEC91F62D126005F82BF /* LaunchScreen.storyboard in Resources */,
 				7FBCAEC61F62D126005F82BF /* Assets.xcassets in Resources */,
 				7FBCAEC41F62D126005F82BF /* Main.storyboard in Resources */,
+				7FBCAEDF1F6436B7005F82BF /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,14 +197,6 @@
 				7FBCAEC31F62D126005F82BF /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		7FBCAEC71F62D126005F82BF /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7FBCAEC81F62D126005F82BF /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -206,7 +243,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -250,7 +287,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -263,11 +300,21 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QWDM3S8674;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CLSUmengPushNotification/CLSUmengPushNotification.entitlements;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CLSUmengPushNotification/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cls.CLSUmengPushNotification;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CLSUmengPushNotification",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fcloud.1111;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CLSUmengPushNotification/CLSUmengPushNotification-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -277,11 +324,20 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = QWDM3S8674;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CLSUmengPushNotification/CLSUmengPushNotification.entitlements;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CLSUmengPushNotification/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cls.CLSUmengPushNotification;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CLSUmengPushNotification",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fcloud.1111;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CLSUmengPushNotification/CLSUmengPushNotification-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
