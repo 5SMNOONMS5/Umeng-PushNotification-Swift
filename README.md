@@ -12,13 +12,16 @@
 
 ![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/1.png)
 
+Import UMessage.h 到 Bridging-Header.h 
+
 ![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/2.png)
+
+打開推播通知
 
 ![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/3.png)
 
 
 # 三：複製貼上 （記得要改Appkey）
-
 
 我將 Code 分為三大部分，如果當前專案只支援到 iOS 9，那就複製 **第1** 跟 **第2**，如果是從 iOS 8 開始支援，那就全部都複製。
 
