@@ -134,6 +134,7 @@
 				TargetAttributes = {
 					7FBCAEBA1F62D126005F82BF = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 7P9NRY3QXZ;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -302,7 +303,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CLSUmengPushNotification/CLSUmengPushNotification.entitlements;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7P9NRY3QXZ;
 				INFOPLIST_FILE = CLSUmengPushNotification/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -310,9 +311,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/CLSUmengPushNotification",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fcloud.1111;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gcgc.bjh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "f849d244-db4f-4bcf-9a81-a6b88cd57e16";
+				PROVISIONING_PROFILE_SPECIFIER = "❇️ [ B ] [ Dev ] com.gcgc.bjh";
 				SWIFT_OBJC_BRIDGING_HEADER = "CLSUmengPushNotification/CLSUmengPushNotification-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -326,7 +328,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CLSUmengPushNotification/CLSUmengPushNotification.entitlements;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = 7P9NRY3QXZ;
 				INFOPLIST_FILE = CLSUmengPushNotification/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -334,9 +337,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/CLSUmengPushNotification",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fcloud.1111;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gcgc.bjh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "7156691c-abab-46b1-b755-161cf94128a4";
+				PROVISIONING_PROFILE_SPECIFIER = "❇️ [ B ] [ Prod ] com.gcgc.bjh";
 				SWIFT_OBJC_BRIDGING_HEADER = "CLSUmengPushNotification/CLSUmengPushNotification-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

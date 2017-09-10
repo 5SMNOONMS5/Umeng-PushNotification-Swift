@@ -8,6 +8,10 @@
 
 import UIKit
 
+let ACTION_ACCEPT_ID = "actionAcceptID"
+let ACTION_REJECT_ID = "actionRejectID"
+let CATEGORY_ID = "categoryID"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -30,7 +34,7 @@ extension AppDelegate {
     
     fileprivate func setupPushNotification(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         
-        UMessage.start(withAppkey: "Your Key", launchOptions: launchOptions)
+        UMessage.start(withAppkey: "594b5e562ae85b45060010cc", launchOptions: launchOptions)
         UMessage.registerForRemoteNotifications()
         
         /// iOS 10 以上，包含 iOS 10
@@ -38,6 +42,7 @@ extension AppDelegate {
             
             let options: UNAuthorizationOptions = [.alert, .sound, .badge]
             let center = UNUserNotificationCenter.current()
+            self.setupiOS10AndAboveCategory(center: center)
             center.delegate = self
             UNUserNotificationCenter.current().requestAuthorization(options: options, completionHandler: { (granted, error) in
                 
@@ -53,7 +58,7 @@ extension AppDelegate {
                 }
             })
         } else {
-            
+            self.setupiOS8AndiOS9ActionCategory()
         }
         
         /// 打开日志，方便调试
@@ -85,6 +90,38 @@ extension AppDelegate {
         /// 统计点击数
         UMessage.didReceiveRemoteNotification(userInfo)
     }
+
+    func setupiOS8AndiOS9ActionCategory() {
+        
+        let actionAccept = UIMutableUserNotificationAction()
+        actionAccept.identifier = ACTION_ACCEPT_ID
+        actionAccept.title = "接受"
+        /// 當點擊印用，啟動 App
+        actionAccept.activationMode = .foreground
+
+        let actionReject = UIMutableUserNotificationAction()
+        actionReject.identifier = ACTION_REJECT_ID
+        actionReject.title = "拒絕"
+        /// 当点击的时候不启动程序，在后台处理
+        actionReject.activationMode = .background
+        /// 需要解锁才能处理，如果action.activationMode = UIUserNotificationActivationModeForeground;则这个属性被忽略；
+        actionReject.isAuthenticationRequired = true
+        actionReject.isDestructive = true
+
+        let categorys = UIMutableUserNotificationCategory()
+        /// 这组动作的唯一标示
+        categorys.identifier = CATEGORY_ID
+        categorys.setActions([actionAccept, actionReject], for: .default)
+        UMessage.register(forRemoteNotifications: [categorys])
+    }
+    
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [AnyHashable : Any], completionHandler: @escaping () -> Void) {
+        if identifier == ACTION_ACCEPT_ID {
+            print("推播 ，點擊 接受")
+        } else if identifier == ACTION_REJECT_ID {
+            print("推播 ，點擊 拒絕")
+        }
+    }
 }
 
 // ******************************************
@@ -94,6 +131,14 @@ extension AppDelegate {
 // ******************************************
 @available(iOS 10.0, *)
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    fileprivate func setupiOS10AndAboveCategory(center: UNUserNotificationCenter) {
+        
+        let actionAccept = UNNotificationAction(identifier: ACTION_ACCEPT_ID, title: "接受", options: .foreground)
+        let actionReject = UNNotificationAction(identifier: ACTION_REJECT_ID, title: "拒絕", options: .destructive)
+        let category = UNNotificationCategory(identifier: CATEGORY_ID, actions: [actionAccept, actionReject], intentIdentifiers: [], options: [])
+        center.setNotificationCategories([category])
+    }
     
     /// iOS10 新增：當 App 在＊＊前景＊＊模式下會收到訊息
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -126,6 +171,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if response.notification.request.trigger?.isKind(of: UNPushNotificationTrigger.self) ?? false {
             print("當 App 在＊＊背景＊＊模式下，處理遠程推送")
+            if response.actionIdentifier == ACTION_ACCEPT_ID {
+                print("推播，點擊 接受")
+            } else if response.actionIdentifier == ACTION_REJECT_ID {
+                print("推播，點擊 拒絕")
+            }
         } else {
             print("當 App 在＊＊背景＊＊模式下，處理本地推送")
         }

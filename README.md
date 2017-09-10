@@ -31,5 +31,25 @@ Import UMessage.h 到 Bridging-Header.h
 
 ![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/5.png)
 
-# 五：進階版本
+# 五：進階版本的 Interactive Notification (可互動的推播)
+
+這邊我把 Code 分成 **iOS 10 以上** 以及 **iOS 10 以下** 兩個方法
+
+```swift
+self.setupiOS10AndAboveCategory(center: center)
+
+self.setupiOS8AndiOS9ActionCategory()
+```
+
+![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/6.png)
+
+iOS 10 以上 
+
+![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/7.png)
+
+iOS 8 ~ iOS 9
+
+![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/8.png)
+
+
 
