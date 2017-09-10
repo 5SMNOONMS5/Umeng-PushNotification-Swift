@@ -4,7 +4,11 @@
 
 # 一：註冊友盟帳號
 
-註冊友盟帳號
+註冊[友盟](http://dev.umeng.com/push/ios/integration)帳號 
+
+並且上傳正確的開發以及發布證書
+
+![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/0.png)
 
 # 二：安裝 SDK 到專案
 
