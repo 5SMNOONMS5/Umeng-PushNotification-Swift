@@ -20,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         self.setupPushNotification(launchOptions: launchOptions)
+        
+        /// 當 App 被 close 掉，然後這時候又有推播通知的話。
+        if launchOptions != nil {
+            if let userInfo = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] {
+                print("有推播通知 \(userInfo)")
+            }
+        }
     
         return true
     }
@@ -34,7 +41,7 @@ extension AppDelegate {
     
     fileprivate func setupPushNotification(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         
-        UMessage.start(withAppkey: "594b5e562ae85b45060010cc", launchOptions: launchOptions)
+        UMessage.start(withAppkey: "App key", launchOptions: launchOptions)
         UMessage.registerForRemoteNotifications()
         
         /// iOS 10 以上，包含 iOS 10
