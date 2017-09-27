@@ -20,13 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         self.setupPushNotification(launchOptions: launchOptions)
-        
-        /// 當 App 被 close 掉，然後這時候又有推播通知的話。
-        if launchOptions != nil {
-            if let userInfo = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] {
-                print("有推播通知 \(userInfo)")
-            }
-        }
     
         return true
     }
@@ -39,7 +32,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // ******************************************
 extension AppDelegate {
     
+    /// 推播的基本設定
+    ///
+    /// - Parameter launchOptions: <#launchOptions description#>
     fileprivate func setupPushNotification(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        
+        /// 當 App 被 close 掉，然後這時候又有推播通知的話。
+        if let userInfo = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] {
+            print("有推播通知 \(userInfo)")
+            return
+        }
         
         UMessage.start(withAppkey: "App key", launchOptions: launchOptions)
         UMessage.registerForRemoteNotifications()
@@ -74,6 +76,22 @@ extension AppDelegate {
         UMessage.setAutoAlert(false)
     }
     
+    /// 清除推播訊息
+    fileprivate func cleanNotificationMessage() {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        if #available(iOS 10.0, *) {
+            let center = UNUserNotificationCenter.current()
+            center.removeAllPendingNotificationRequests()
+            // To remove all pending notifications which are not delivered yet but scheduled.
+            center.removeAllDeliveredNotifications()
+            // To remove all delivered notifications
+        } else {
+            UIApplication.shared.cancelAllLocalNotifications()
+        }
+
+    }
+    
     /// 拿到 Device Token
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         print("1.2.7版本开始不需要用户再手动注册devicetoken，SDK会自动注册 deviceToken = \(deviceToken.hexString)")
@@ -96,6 +114,7 @@ extension AppDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         /// 统计点击数
         UMessage.didReceiveRemoteNotification(userInfo)
+        self.cleanNotificationMessage()
     }
 
     func setupiOS8AndiOS9ActionCategory() {
@@ -128,6 +147,7 @@ extension AppDelegate {
         } else if identifier == ACTION_REJECT_ID {
             print("推播 ，點擊 拒絕")
         }
+        self.cleanNotificationMessage()
     }
 }
 
@@ -164,6 +184,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         UMessage.didReceiveRemoteNotification(userInfo)
         
         completionHandler([.alert, .sound, .badge])
+        self.cleanNotificationMessage()
     }
     
     /// iOS10 新增：當 App 在＊＊背景＊＊模式下
