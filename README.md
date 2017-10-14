@@ -55,5 +55,10 @@ iOS 8 ~ iOS 9
 
 ![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/8.png)
 
+# 六：遇到的問題
+
+#### Q: 當 APP 在背景的時候收到推播，使用者直接點擊 App 不點擊推播訊息，有辦法接收到訊息嗎？
+
+#### A: [目前沒辦法](https://stackoverflow.com/questions/12084015/ios-push-notification-how-to-get-the-notification-data-when-you-click-on-the-a)
 
 
