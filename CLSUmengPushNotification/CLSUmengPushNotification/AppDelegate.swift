@@ -8,9 +8,11 @@
 
 import UIKit
 
-let ACTION_ACCEPT_ID = "actionAcceptID"
-let ACTION_REJECT_ID = "actionRejectID"
-let CATEGORY_ID = "categoryID"
+let ACTION_ACCEPT_ID = "ACTION_ACCEPT_ID"
+let ACTION_REJECT_ID = "ACTION_REJECT_ID"
+let CATEGORY_ID = "CATEGORY_ID"
+let CHANNEL_ID = "CHANNEL_ID"
+let APP_KEY = "APP_KEY"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -43,7 +45,8 @@ extension AppDelegate {
             return
         }
         
-        UMessage.start(withAppkey: "App key", launchOptions: launchOptions)
+        UMessage.setChannel(CHANNEL_ID)
+        UMessage.start(withAppkey: APP_KEY, launchOptions: launchOptions)
         UMessage.registerForRemoteNotifications()
         
         /// iOS 10 以上，包含 iOS 10
@@ -89,7 +92,6 @@ extension AppDelegate {
         } else {
             UIApplication.shared.cancelAllLocalNotifications()
         }
-
     }
     
     /// 拿到 Device Token
@@ -119,10 +121,10 @@ extension AppDelegate {
 
     func setupiOS8AndiOS9ActionCategory() {
         
+        /// 當點擊印用，啟動 App
         let actionAccept = UIMutableUserNotificationAction()
         actionAccept.identifier = ACTION_ACCEPT_ID
         actionAccept.title = "接受"
-        /// 當點擊印用，啟動 App
         actionAccept.activationMode = .foreground
 
         let actionReject = UIMutableUserNotificationAction()
