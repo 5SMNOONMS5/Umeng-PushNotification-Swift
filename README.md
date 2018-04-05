@@ -1,64 +1,180 @@
 # Umeng-PushNotification-Swift
-實作友盟推播 ( iOS 8 以上 )
+友盟推播 ( iOS 8 以上 )
 
+# 分成兩階段
+* 1. 友盟官方設定
+* 2. 實作
 
-# 一：註冊友盟帳號
+## 前言： 
 
-註冊[友盟](http://dev.umeng.com/push/ios/integration)帳號 
+* 註冊[友盟](https://passport.umeng.com/signup?lang=zh_CN)帳號吧～
 
-並且上傳正確的開發以及發布證書
+## 1-1:  友盟官方設定 - 創建新應用
 
 ![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/0.png)
 
-# 二：安裝 SDK 到專案
-
-首先下載 [v1.5.0a版本(支援到 iOS 10)](http://dev.umeng.com/push/ios/integration)
+## 1-2:  友盟官方設定 - 上傳正確的開發證書以及申請憑證
 
 ![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/1.png)
 
-Import UMessage.h 到 Bridging-Header.h 
+憑證問題可以參考[這篇](https://www.appcoda.com.tw/push-notification-ios/)，圖文教學非常詳細。
+
+# 2:  實作
+
+# 2-1 : 實作 - 引入 SDK  
+
+1. 手動
+到[官網](https://developer.umeng.com/sdk/ios?refer=UPush)勾選並且下載。
 
 ![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/2.png)
 
-打開推播通知
+2. Cocoapod
 
-![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/3.png)
-
-
-# 三：複製貼上 （記得要改Appkey）
-
-我將 Code 分為三大部分，如果當前專案只支援到 iOS 9，那就複製 **第1** 跟 **第2**，如果是從 iOS 8 開始支援，那就全部都複製。
-
-![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/4.png)
-
-# 四：把 DeviceToken 貼到官網上，然後完畢。
-
-![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/5.png)
-
-# 五：進階版本的 Interactive Notification (可互動的推播)
-
-這邊我把 Code 分成 **iOS 10 以上** 以及 **iOS 10 以下** 兩個方法
-
-```swift
-self.setupiOS10AndAboveCategory(center: center)
-
-self.setupiOS8AndiOS9ActionCategory()
+```
+pod 'UMCCommon'
+pod 'UMCPush'
+pod 'UMCSecurityPlugins'
 ```
 
-![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/6.png)
+更詳細的說明請看[官網圖文教學](https://developer.umeng.com/docs/66632/detail/66734)
 
-iOS 10 以上 
+# 2-1 : 實作 - 創建 config 檔案
 
-![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/7.png)
+寫出來的原因是之後假如要上架或者要修改一些專案的相關變數，可以很方便地在一個 file 裡面去修改就可以了。
 
-iOS 8 ~ iOS 9
+```swift
+public final class Config {
+    
+    static let share = Config()
+    
+    let keyUmeng: String = ""
+    
+    /// 上架記得改成 false
+    let isEnableUmengLog: Bool = true
+    
+    let channelID: String = ""
+}
+```
 
-![](https://github.com/5SMNOONMS5/CLS-Umeng-PushNotification-Swift/blob/master/images/8.png)
+# 2-2 : 實作 - 友盟初始化
 
-# 六：遇到的問題
+```swift
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        self.setupUmeng(launchOptions: launchOptions)
+        
+        return true
+    }
+```
 
-#### Q: 當 APP 在背景的時候收到推播，使用者直接點擊 App 不點擊推播訊息，有辦法接收到訊息嗎？
 
-#### A: [目前沒辦法](https://stackoverflow.com/questions/12084015/ios-push-notification-how-to-get-the-notification-data-when-you-click-on-the-a)
+```swift
+func setupUmeng(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        
+        /// 友盟初始化
+        UMConfigure.initWithAppkey(Config.share.keyUmeng, channel: Config.share.channelID)
+        UMConfigure.setLogEnabled(Config.share.isEnableUmengLog)
+        
+        /// 友盟統計
+        MobClick.setScenarioType(eScenarioType.E_UM_NORMAL)
+        
+        /// iOS 10 以上必須支援
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+        }
+        
+        /// 友盟推送配置
+        let entity = UMessageRegisterEntity.init()
+        entity.types = Int(UMessageAuthorizationOptions.alert.rawValue) |
+            Int(UMessageAuthorizationOptions.badge.rawValue) |
+            Int(UMessageAuthorizationOptions.sound.rawValue)
+        UMessage.registerForRemoteNotifications(launchOptions: launchOptions, entity: entity) { (granted, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+        UMessage.setAutoAlert(false)
+    }
+```
+
+# 2-2 : 實作 - AppDelegate 推送方法
+
+```swift
+    /// 拿到 Device Token
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        gc_HighLightPrint(msg: deviceToken.hexString)
+    }
+    
+    /// 註冊推送失敗
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        gc_NegativePrint(msg: error.localizedDescription)
+    }
+    
+    /// 接到推送訊息
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        UMessage.didReceiveRemoteNotification(userInfo)
+    }
+```
+
+# 2-3 : 實作 - 接收推送訊息 ( iOS 10 之前)
+
+```swift 
+    /// iOS10 以前接收的方法
+    func application(_ application: UIApplication,
+                     handleActionWithIdentifier identifier: String?,
+                     for notification: UILocalNotification,
+                     withResponseInfo responseInfo: [AnyHashable: Any],
+                     completionHandler: @escaping () -> Void) {
+        /// 这个方法用来做action点击的统计
+        UMessage.sendClickReport(forRemoteNotification: responseInfo)
+    }
+```
+
+
+# 2-4 : 實作 - 接收推送訊息 ( iOS 10 之後)
+
+```swift 
+@available(iOS 10.0, *)
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    /// iOS10 新增：當 App 在＊＊前景＊＊模式下
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        let userInfo: [AnyHashable: Any] = notification.request.content.userInfo
+        
+        /// 處理遠程推送 ( Push Notification )
+        if notification.request.trigger?.isKind(of: UNPushNotificationTrigger.self) ?? false {
+            print("App 在＊＊前景＊＊模式下的遠程推送")
+        } else {
+            print("App 在＊＊前景＊＊模式下的本地推送")
+        }
+        completionHandler([.sound, .badge])
+    }
+    
+    /// iOS10 新增：當 App 在＊＊背景＊＊模式下
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let userInfo: [AnyHashable: Any] = response.notification.request.content.userInfo
+        
+        (response.notification.request.trigger?.isKind(of: UNPushNotificationTrigger.self) ?? false)
+            /// 處理遠程推送 ( Push Notification )
+            ? print("App 在＊＊背景＊＊模式下的遠程推送")
+            /// 處理本地推送 ( Local Notification )
+            : print("App 在＊＊背景＊＊模式下的本地推送")
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
